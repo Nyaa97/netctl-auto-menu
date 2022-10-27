@@ -1,5 +1,4 @@
-_pkgname=netctl-auto-men
-pkgname=${_pkgname}
+pkgname=netctl-auto-menu
 pkgver=1
 pkgrel=1
 pkgdesc='A wifi menu for netctl'
@@ -9,17 +8,20 @@ license=('GPL')
 depends=('dzen2' 'netctl' 'xorg-xprop')
 makedepends=('git' 'rustup')
 optdepends=()
-provides=("${_pkgname}")
+provides=("${pkgname}")
 conflicts=()
-source=("https://github.com/Nyaa97/${_pkgname}")
+source=("git+https://github.com/Nyaa97/${pkgname}")
 md5sums=('SKIP')
 
+prepare() {
+  ln -s "$srcdir/../$pkgname" "$srcdir"
+}
+
 build() {
-  cd "$srcdir/$_pkgname"
-  cargo build
+  cd "$srcdir/$pkgname"
+  cargo build --release
 }
 
 package() {
-  installDir="$pkgdir/usr/bin"
-  install -m755 "$srcdir/$_pkgname/target/$_pkgname" "$installDir/$_pkgname"
+  install -Dm755 "$srcdir/$pkgname/target/release/$pkgname" "$pkgdir/usr/bin/$pkgname"
 }
