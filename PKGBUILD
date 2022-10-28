@@ -13,10 +13,6 @@ conflicts=()
 source=("git+https://github.com/Nyaa97/${pkgname}")
 md5sums=('SKIP')
 
-prepare() {
-  ln -s "$srcdir/../$pkgname" "$srcdir"
-}
-
 build() {
   cd "$srcdir/$pkgname"
   cargo build --release
